@@ -1,0 +1,5 @@
+{
+  // A workaround to stop typescipt errors
+  // https://github.com/Microsoft/vscode/issues/15171
+  "javascript.validate.enable": false
+}

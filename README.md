@@ -9,6 +9,7 @@ Additional libraries and tools:
   - [Bootstrap 4](https://getbootstrap.com/) for UI styling
   - [ESLint](https://eslint.org/) for linting Javascript code
   - [flow](https://flow.org/) for type checking
+  - [enzyme](https://github.com/airbnb/enzyme) and [jest](https://facebook.github.io/jest/) for unit tests
   - [json-server](https://github.com/typicode/json-server) - A simple REST server for API testing
   - [prettier](https://prettier.io/) for code formatting
 

@@ -7,7 +7,7 @@ import type { Hotels } from '../../types/hotel.js';
 import type { CancelTokenSource } from 'axios';
 
 // API endpoint
-const API_GET_HOTELS =
+export const API_GET_HOTELS =
   'https://raw.githubusercontent.com/ozmoroz/hooroo-coding-test/master/data.json';
 
 // Flow type definitions
@@ -21,15 +21,14 @@ type State = {
 class App extends Component<Props, State> {
   state = { axiosCancelSource: null, hotels: null, xhrError: null }; // the initial state
   // Axios cancel token source, used to cancel an HXR request
-  axiosCancelSource:CancelTokenSource = axios.CancelToken.source();
+  axiosCancelSource: CancelTokenSource = axios.CancelToken.source();
 
   componentDidMount() {
     // Reset XHR Error, get Axios cancel token
     this.setState({ xhrError: null });
     // Fetch the list of hotels
-    // Since our goal is to perform complex transformations or/and filtering
-    // on the data, it makes sense to store it in a denormalized state.
-    axios
+    // Return promise to help with unit testing
+    return axios
       .get(API_GET_HOTELS, {
         cancelToken: this.axiosCancelSource && this.axiosCancelSource.token
       })
@@ -41,8 +40,10 @@ class App extends Component<Props, State> {
         if (axios.isCancel(error)) {
           console.log('Request canceled', error.message);
         } else {
-          this.setState({ xhrError: error.message });
           if (error.response) {
+            this.setState({
+              xhrError: `${error.message}: ${error.response.data.message}`
+            });
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
             console.log(error.response.data);
@@ -52,9 +53,11 @@ class App extends Component<Props, State> {
             // The request was made but no response was received
             // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
             // http.ClientRequest in node.js
+            this.setState({ xhrError: error.message });
             console.log(error.request);
           } else {
             // Something happened in setting up the request that triggered an Error
+            this.setState({ xhrError: error.message });
             console.log('Error', error.message);
           }
           console.log(error.config);
@@ -72,7 +75,7 @@ class App extends Component<Props, State> {
   render() {
     return (
       <div className="App">
-        {this.state.xhrError ? (
+        {this.state.xhrError !== null ? (
           <div className="card">
             <div className="card-body bg-danger text-white">
               {this.state.xhrError}
