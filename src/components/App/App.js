@@ -74,7 +74,7 @@ class App extends Component<Props, State> {
 
   render() {
     return (
-      <div className="App">
+      <div className="App container">
         {this.state.xhrError !== null ? (
           <div className="card">
             <div className="card-body bg-danger text-white">

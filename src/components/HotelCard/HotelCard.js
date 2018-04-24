@@ -17,9 +17,14 @@ type Props = {
 const HotelCard = (props: Props) => {
   if (!props.id) return null;
   return (
-    <div>
-      <div>{props.title}</div>
-      <div>{props.address}</div>
+    <div className="card flex-row">
+      <div class="card-header border-0">
+        <img src={props.image} alt={props.title} />
+      </div>
+      <div className="card-body">
+        <h5 className="card-title">{props.title}</h5>
+        <p className="card-text">{props.address}</p>
+      </div>
     </div>
   );
 };
