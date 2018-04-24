@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import axios from 'axios';
-import './App.css';
+import HotelsList from '../HotelsList';
 import type { Hotels } from '../../types/hotel.js';
 import type { CancelTokenSource } from 'axios';
 
@@ -82,7 +82,7 @@ class App extends Component<Props, State> {
             </div>
           </div>
         ) : (
-          <div>App started successfully</div>
+          <HotelsList hotels={this.state.hotels} />
         )}
       </div>
     );
